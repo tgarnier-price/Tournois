@@ -40,6 +40,14 @@
                                     <?php if (isset($smenu['icon'])) echo $smenu['icon']; ?>
                                     <?= $smenu['title'] ?></a></li>
                         <?php } ?>
+
+                        <li class="nav-item ps-2" id="menu_ecole">
+                            <a class="nav-link" href="<?= base_url('userschool'); ?>">
+                                <i class="fa-solid fa-school"></i>
+
+                                École
+                            </a>
+                        </li>
                     </ul>
                 </li>
             <?php }} ?>
