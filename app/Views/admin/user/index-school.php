@@ -10,6 +10,8 @@
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Slug</th>
+                <th>Ville</th>
+                <th>Score</th>
                 <th>Modifier</th>
                 <th>Supprimer</th>
             </tr>
@@ -34,12 +36,17 @@
             },
             "ajax": {
                 "url": baseUrl + "admin/userschool/SearchSchool",
-                "type": "POST"
+                "type": "POST",
+                "error": function(xhr, error, thrown) {
+                    console.error("Erreur DataTables:", xhr.responseText);
+                }
             },
             "columns": [
                 {"data": "id"},
                 {"data": "name"},
                 {"data": "slug"},
+                {"data": "city"},
+                {"data": "score"},
                 {
                     data : 'id',
                     sortable : false,
