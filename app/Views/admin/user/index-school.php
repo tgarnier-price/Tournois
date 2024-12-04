@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h4>Liste des rôles</h4>
+        <h4>Liste des écoles</h4>
         <a href="<?= base_url('/admin/userschool/new'); ?>"><i class="fa-solid fa-circle-plus"></i></a>
     </div>
     <div class="card-body">
