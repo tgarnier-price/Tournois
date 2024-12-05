@@ -9,35 +9,21 @@ class TableParticipant extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id' => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
-                'auto_increment' => true,
-            ],
             'id_tournament' => [
-                'type'       => 'INT',
+                'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'   => true,
-                'null'       => false,
+                'unsigned' => true,
             ],
             'id_user' => [
-                'type'       => 'INT',
+                'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'   => true,
-                'null'       => false,
-            ],
-            'date' => [
-                'type'       => 'DATETIME',
-                'null'       => true,
+                'unsigned' => true,
             ],
         ]);
 
         $this->forge->addKey('id', true);
-
         $this->forge->addForeignKey('id_tournament', 'tournament', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_user', 'user', 'id', 'CASCADE', 'CASCADE');
-
         $this->forge->createTable('participant');
     }
 

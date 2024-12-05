@@ -17,33 +17,33 @@ class TableSchool extends Migration
             ],
             'name' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 255,
-                'null'       => false,
+                'constraint' => '100',
             ],
             'city' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 100,
-                'null'       => true,
+                'constraint' => '100',
             ],
             'score' => [
                 'type'       => 'INT',
-                'constraint' => 11,
                 'unsigned'   => true,
-                'null'       => false,
+                'default'    => 0
             ],
-            'actif' => [
-                'type'       => 'TINYINT',
-                'constraint' => 1,
-                'unsigned'   => true,
-                'null'       => false,
-                'default'    => 0,
+            'created_at' => [
+                'type'       => 'DATETIME',
+                'null'       => true,
             ],
-
+            'updated_at' => [
+                'type'       => 'DATETIME',
+                'null'       => true,
+            ],
+            'deleted_at' => [
+                'type'       => 'DATETIME',
+                'null'       => true,
+            ],
         ]);
 
         $this->forge->addKey('id', true);
         $this->forge->createTable('school');
-
     }
 
     public function down()

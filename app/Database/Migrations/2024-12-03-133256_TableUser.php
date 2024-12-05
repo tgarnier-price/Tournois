@@ -38,8 +38,8 @@ class TableUser extends Migration
             ],
             'score' => [
                 'type'       => 'INT',
-                'unsigned' => true,
-                'default' => 0
+                'unsigned'   => true,
+                'default'    => 0
             ],
             'bio' => [
                 'type'       => 'TEXT',
@@ -49,11 +49,13 @@ class TableUser extends Migration
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'   => true,
+                'null'       => true,
             ],
             'id_school' => [
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'   => true,
+                'null'       => true,
             ],
             'created_at' => [
                 'type'       => 'DATETIME',
@@ -70,8 +72,12 @@ class TableUser extends Migration
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('id_permission', 'user_permission', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_school', 'school', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('user');
+
     }
+
 
     public function down()
     {

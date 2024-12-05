@@ -17,33 +17,26 @@ class TableTournament extends Migration
             ],
             'id_game' => [
                 'type'       => 'INT',
-                'constraint' => 11,
                 'unsigned'   => true,
-                'null'       => false,
+                'constraint'     => 11,
             ],
-            'category' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '100',
+            'created_at' => [
+                'type'       => 'DATETIME',
                 'null'       => true,
             ],
-            'type' => [
-                'type'       => 'INT',
-                'constraint' => 11,
-                'unsigned'   => true,
-                'null'       => false,
+            'updated_at' => [
+                'type'       => 'DATETIME',
+                'null'       => true,
             ],
-            'nb' => [
-                'type'       => 'ENUM',
-                'constraint' => ['user', 'admin'],
-                'default'    => 'user',
+            'deleted_at' => [
+                'type'       => 'DATETIME',
+                'null'       => true,
             ],
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_game', 'game', 'id', 'CASCADE', 'CASCADE'); // Clé étrangère vers `game`
-        $this->forge->addForeignKey('type', 'types', 'id', 'CASCADE', 'CASCADE'); // Clé étrangère vers `types`
+        $this->forge->addForeignKey('id_game', 'game', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('tournament');
-
     }
 
     public function down()

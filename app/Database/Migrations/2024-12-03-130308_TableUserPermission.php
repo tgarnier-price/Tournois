@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class TableCategoryGame extends Migration
+class TableUserPermission extends Migration
 {
     public function up()
     {
@@ -15,20 +15,26 @@ class TableCategoryGame extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'libelle' => [
+            'name' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 255,
-                'null'       => false,
+                'constraint' => '100',
             ],
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->createTable('categorygame');
+        $this->forge->createTable('user_permission');
+
+        // Insérer les 3 permissions par défaut
+        $data = [
+            ['name' => 'Administrateur'],
+            ['name' => 'Collaborateur'],
+            ['name' => 'Utilisateur'],
+        ];
+        $this->db->table('user_permission')->insertBatch($data);
     }
 
     public function down()
     {
-        $this->forge->dropTable('categorygame');
-
+        $this->forge->dropTable('user_permission');
     }
 }
