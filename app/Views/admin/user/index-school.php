@@ -46,12 +46,12 @@
                 {"data": "name"},
                 {"data": "city"},
                 {"data": "score"},
-                {"data": "actif",
-                    render: function(data, type, row) {
-                        var statusButton = data == 1 ?
-                            `<button class="btn btn-success toggle-status" data-id="${row.id}" data-status="1">Actif</button>` :
-                            `<button class="btn btn-danger toggle-status" data-id="${row.id}" data-status="0">Inactif</button>`;
-                        return statusButton;
+                {
+                    data : 'id',
+                    sortable : false,
+                    render : function(data, type, row) {
+                        return (row.deleted_at === null ?
+                            `<a title="Désactiver l'ecole" href="${baseUrl}admin/userschool/deactivate/${row.id}"><i class="fa-solid fa-xl fa-toggle-on text-success"></i></a>`: `<a title="Activer une ecole"href="${baseUrl}admin/userschool/activate/${row.id}"><i class="fa-solid fa-toggle-off fa-xl text-danger"></i></a>`);
                     }
                 },
                 {
@@ -86,15 +86,15 @@
                 },
                 success: function(response) {
                     if(response.success) {
-                        // Update the button appearance after successful update
+                        // Update the icon after successful update
                         var button = $(this);
                         if(newStatus == 1) {
-                            button.removeClass('btn-danger').addClass('btn-success').text('Actif');
-                            button.data('status', 1);
+                            button.find('i').removeClass('fa-toggle-off').addClass('fa-toggle-on');
                         } else {
-                            button.removeClass('btn-success').addClass('btn-danger').text('Inactif');
-                            button.data('status', 0);
+                            button.find('i').removeClass('fa-toggle-on').addClass('fa-toggle-off');
                         }
+                        // Update the status in the table
+                        button.data('status', newStatus);
                     } else {
                         alert('Erreur lors de la mise à jour du statut.');
                     }

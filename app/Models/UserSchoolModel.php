@@ -58,6 +58,21 @@ class UserSchoolModel extends Model
         return $this->delete($id);
     }
 
+    public function deactivateSchool($id) {
+        $builder = $this->builder();
+        $builder->set('deleted_at', date('Y-m-d H:i:s'));  // Marquer comme inactif avec une date
+        $builder->where('id', $id);
+        return $builder->update();
+    }
+
+    public function activateSchool($id) {
+        $builder = $this->builder();
+        $builder->set('deleted_at', NULL);  // Réactiver l'école en annulant la date
+        $builder->where('id', $id);
+        return $builder->update();
+    }
+
+
     public function getPaginatedSchool($start, $length, $searchValue, $orderColumnName, $orderDirection)
     {
         $builder = $this->builder();

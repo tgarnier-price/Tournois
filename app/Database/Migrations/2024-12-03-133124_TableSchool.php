@@ -28,6 +28,12 @@ class TableSchool extends Migration
                 'unsigned'   => true,
                 'default'    => 0
             ],
+            'actif' => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'default'    => 0,
+                'null'       => false
+            ],
             'created_at' => [
                 'type'       => 'DATETIME',
                 'null'       => true,
