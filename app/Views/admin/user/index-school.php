@@ -9,7 +9,6 @@
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
-                <th>Slug</th>
                 <th>Ville</th>
                 <th>Score</th>
                 <th>Actif</th>
@@ -45,7 +44,6 @@
             "columns": [
                 {"data": "id"},
                 {"data": "name"},
-                {"data": "slug"},
                 {"data": "city"},
                 {"data": "score"},
                 {"data": "actif",
