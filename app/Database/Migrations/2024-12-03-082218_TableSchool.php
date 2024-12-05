@@ -31,6 +31,14 @@ class TableSchool extends Migration
                 'unsigned'   => true,
                 'null'       => false,
             ],
+            'actif' => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'unsigned'   => true,
+                'null'       => false,
+                'default'    => 0,
+            ],
+
         ]);
 
         $this->forge->addKey('id', true);

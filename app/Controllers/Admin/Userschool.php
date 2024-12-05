@@ -12,9 +12,9 @@ class Userschool extends BaseController
         if ($id == null) {
             return $this->view('/admin/user/index-school', [], true);
         } else {
-            $us = Model("/UserSchoolModel");
+            $us = Model("UserSchoolModel");
             if ($id == "new") {
-                return $this->view('/admin/user/index-school', [], true);
+                return $this->view('/admin/user/user-school', [], true);
             }
             $school = $us->getUserSchoolById($id);
             return $this->view('/admin/user/index-school', ["school" => $school], true);
@@ -59,7 +59,7 @@ class Userschool extends BaseController
 
     public function postSearchSchool()
     {
-        $UserModel = model('App\Models\UserSchoolModel');
+        $UserSchoolModel = model('UserSchoolModel');
 
         // Paramètres de pagination et de recherche envoyés par DataTables
         $draw        = $this->request->getPost('draw');
@@ -73,13 +73,13 @@ class Userschool extends BaseController
         $orderColumnName = $this->request->getPost('columns')[$orderColumnIndex]['data'];
 
         // Obtenez les données triées et filtrées
-        $data = $UserModel->getPaginatedSchool($start, $length, $searchValue, $orderColumnName, $orderDirection);
+        $data = $UserSchoolModel->getPaginatedSchool($start, $length, $searchValue, $orderColumnName, $orderDirection);
 
         // Obtenez le nombre total de lignes sans filtre
-        $totalRecords = $UserModel->getTotalSchool();
+        $totalRecords = $UserSchoolModel->getTotalSchool();
 
         // Obtenez le nombre total de lignes filtrées pour la recherche
-        $filteredRecords = $UserModel->getFilteredSchool($searchValue);
+        $filteredRecords = $UserSchoolModel->getFilteredSchool($searchValue);
 
         $result = [
             'draw'            => $draw,

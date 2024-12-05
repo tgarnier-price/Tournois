@@ -12,6 +12,7 @@
                 <th>Slug</th>
                 <th>Ville</th>
                 <th>Score</th>
+                <th>Actif</th>
                 <th>Modifier</th>
                 <th>Supprimer</th>
             </tr>
@@ -47,23 +48,63 @@
                 {"data": "slug"},
                 {"data": "city"},
                 {"data": "score"},
-                {
-                    data : 'id',
-                    sortable : false,
-                    render : function(data) {
-                        return `<a href="${baseUrl}admin/userschool/${data}"><i class="fa-solid
-                        fa-pencil"></i></a>`;
+                {"data": "actif",
+                    render: function(data, type, row) {
+                        var statusButton = data == 1 ?
+                            `<button class="btn btn-success toggle-status" data-id="${row.id}" data-status="1">Actif</button>` :
+                            `<button class="btn btn-danger toggle-status" data-id="${row.id}" data-status="0">Inactif</button>`;
+                        return statusButton;
                     }
                 },
                 {
-                    data : 'id',
-                    sortable : false,
-                    render : function(data) {
+                    data: 'id',
+                    sortable: false,
+                    render: function(data) {
+                        return `<a href="${baseUrl}admin/userschool/${data}"><i class="fa-solid fa-pencil"></i></a>`;
+                    }
+                },
+                {
+                    data: 'id',
+                    sortable: false,
+                    render: function(data) {
                         return `<a href='${baseUrl}admin/userschool/delete/${data}'><i class="fa-solid fa-trash"></i></a>`;
                     }
                 }
             ]
         });
-    });
 
+        // Event handler to toggle status
+        $('#tableSchool').on('click', '.toggle-status', function() {
+            var userId = $(this).data('id');
+            var newStatus = $(this).data('status');
+
+            // Send an AJAX request to update the status
+            $.ajax({
+                url: baseUrl + 'admin/userschool/toggleStatus',  // Update with your correct URL
+                type: 'POST',
+                data: {
+                    id: userId,
+                    status: newStatus
+                },
+                success: function(response) {
+                    if(response.success) {
+                        // Update the button appearance after successful update
+                        var button = $(this);
+                        if(newStatus == 1) {
+                            button.removeClass('btn-danger').addClass('btn-success').text('Actif');
+                            button.data('status', 1);
+                        } else {
+                            button.removeClass('btn-success').addClass('btn-danger').text('Inactif');
+                            button.data('status', 0);
+                        }
+                    } else {
+                        alert('Erreur lors de la mise à jour du statut.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur AJAX:', xhr.responseText);
+                }
+            });
+        });
+    });
 </script>

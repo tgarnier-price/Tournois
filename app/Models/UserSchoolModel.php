@@ -6,10 +6,10 @@ use CodeIgniter\Model;
 
 class UserSchoolModel extends Model
 {
-    protected $table = 'user_school';
+    protected $table = 'school';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['name', 'slug'];
+    protected $allowedFields = ['name', 'city', 'score', 'actif'];
 
     // Validation
     protected $validationRules = [
@@ -18,53 +18,22 @@ class UserSchoolModel extends Model
 
     protected $validationMessages = [
         'name' => [
-            'required'   => 'Le nom de l ecole est requis.',
-            'min_length' => 'Le nom de l ecole doit comporter au moins 3 caractères.',
-            'max_length' => 'Le nom de l ecole ne doit pas dépasser 100 caractères.',
+            'required'   => 'Le nom de l école est requis.',
+            'min_length' => 'Le nom de l école doit comporter au moins 3 caractères.',
+            'max_length' => 'Le nom de l école ne doit pas dépasser 100 caractères.',
         ],
     ];
 
-    public function createScholl($data)
+    public function createSchool($data)
     {
-        if (isset($data['name'])) {
-            // Générer et vérifier le slug unique
-            $data['slug'] = $this->generateUniqueSlug($data['name']);
-        }
-
+        // Pas de génération de slug ici
         return $this->insert($data);
     }
 
     public function updateSchool($id, $data)
     {
-        if (isset($data['name'])) {
-            // Générer et vérifier le slug unique
-            $data['slug'] = $this->generateUniqueSlug($data['name']);
-        }
-
+        // Pas de génération de slug ici
         return $this->update($id, $data);
-    }
-
-    private function generateUniqueSlug($name)
-    {
-        $slug = generateSlug($name); // Utilisez la fonction du helper pour générer le slug de base
-        $builder = $this->builder();
-
-        // Vérifiez si le slug existe déjà
-        $count = $builder->where('slug', $slug)->countAllResults();
-
-        if ($count === 0) {
-            return $slug;
-        }
-
-        // Si le slug existe, ajoutez un suffixe numérique pour le rendre unique
-        $i = 1;
-        while ($count > 0) {
-            $newSlug = $slug . '-' . $i;
-            $count = $builder->where('slug', $newSlug)->countAllResults();
-            $i++;
-        }
-
-        return $newSlug;
     }
 
     public function getUsersBySchool($schoolId)
@@ -117,7 +86,6 @@ class UserSchoolModel extends Model
     public function getFilteredSchool($searchValue)
     {
         $builder = $this->builder();
-        // @phpstan-ignore-next-line
         if (!empty($searchValue)) {
             $builder->like('name', $searchValue);
         }
