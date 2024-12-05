@@ -8,6 +8,7 @@
             <thead>
             <tr>
                 <th>ID</th>
+                <th>Catégorie</th>
                 <th>Nom</th>
                 <th>Ville</th>
                 <th>Score</th>
@@ -20,12 +21,15 @@
             </tbody>
         </table>
     </div>
+    <canvas id="myChart" style="display: flex; max-width: 400px; max-height: 400px;"></canvas>
 </div>
 
 
 <script>
     $(document).ready(function () {
         var baseUrl = "<?= base_url(); ?>";
+
+        // Initialisation de la DataTable
         var dataTable = $('#tableSchool').DataTable({
             "responsive": true,
             "processing": true,
@@ -37,72 +41,101 @@
             "ajax": {
                 "url": baseUrl + "admin/userschool/SearchSchool",
                 "type": "POST",
-                "error": function(xhr, error, thrown) {
+                "dataSrc": function (json) {
+                    // Mettre à jour le graphique avec les données des écoles
+                    updateChart(json.data);
+                    return json.data;
+                },
+                "error": function (xhr, error, thrown) {
                     console.error("Erreur DataTables:", xhr.responseText);
                 }
             },
             "columns": [
                 {"data": "id"},
+                {"data": "id_category"},
                 {"data": "name"},
                 {"data": "city"},
                 {"data": "score"},
                 {
-                    data : 'id',
-                    sortable : false,
-                    render : function(data, type, row) {
+                    data: 'id',
+                    sortable: false,
+                    render: function (data, type, row) {
                         return (row.deleted_at === null ?
-                            `<a title="Désactiver l'ecole" href="${baseUrl}admin/userschool/deactivate/${row.id}"><i class="fa-solid fa-xl fa-toggle-on text-success"></i></a>`: `<a title="Activer une ecole"href="${baseUrl}admin/userschool/activate/${row.id}"><i class="fa-solid fa-toggle-off fa-xl text-danger"></i></a>`);
+                            `<a title="Désactiver l'école" href="${baseUrl}admin/userschool/deactivate/${row.id}"><i class="fa-solid fa-xl fa-toggle-on text-success"></i></a>` :
+                            `<a title="Activer l'école" href="${baseUrl}admin/userschool/activate/${row.id}"><i class="fa-solid fa-toggle-off fa-xl text-danger"></i></a>`);
                     }
                 },
                 {
                     data: 'id',
                     sortable: false,
-                    render: function(data) {
+                    render: function (data) {
                         return `<a href="${baseUrl}admin/userschool/${data}"><i class="fa-solid fa-pencil"></i></a>`;
                     }
                 },
                 {
                     data: 'id',
                     sortable: false,
-                    render: function(data) {
+                    render: function (data) {
                         return `<a href='${baseUrl}admin/userschool/delete/${data}'><i class="fa-solid fa-trash"></i></a>`;
                     }
                 }
             ]
         });
 
-        // Event handler to toggle status
-        $('#tableSchool').on('click', '.toggle-status', function() {
-            var userId = $(this).data('id');
-            var newStatus = $(this).data('status');
-
-            // Send an AJAX request to update the status
-            $.ajax({
-                url: baseUrl + 'admin/userschool/toggleStatus',  // Update with your correct URL
-                type: 'POST',
-                data: {
-                    id: userId,
-                    status: newStatus
-                },
-                success: function(response) {
-                    if(response.success) {
-                        // Update the icon after successful update
-                        var button = $(this);
-                        if(newStatus == 1) {
-                            button.find('i').removeClass('fa-toggle-off').addClass('fa-toggle-on');
-                        } else {
-                            button.find('i').removeClass('fa-toggle-on').addClass('fa-toggle-off');
-                        }
-                        // Update the status in the table
-                        button.data('status', newStatus);
-                    } else {
-                        alert('Erreur lors de la mise à jour du statut.');
+        // Configuration initiale du graphique
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [], // Les noms des écoles
+                datasets: [{
+                    label: 'Scores des écoles',
+                    data: [], // Les scores des écoles
+                    backgroundColor: [], // Couleurs des barres
+                    borderColor: [], // Couleurs des bordures
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Erreur AJAX:', xhr.responseText);
                 }
-            });
+            }
         });
+
+        // Générateur de couleurs aléatoires
+        function getRandomColor() {
+            return `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.6)`;
+        }
+
+        // Fonction pour mettre à jour le graphique
+        function updateChart(schoolData) {
+            var names = [];
+            var scores = [];
+            var colors = [];
+            var borderColors = [];
+
+            // Extraire les noms, scores et générer les couleurs
+            schoolData.forEach(function (school) {
+                names.push(school.name); // Nom de l'école
+                scores.push(school.score); // Score de l'école
+                var color = getRandomColor();
+                colors.push(color); // Couleur pour chaque école
+                borderColors.push(color.replace('0.6', '1')); // Couleur pour la bordure
+            });
+
+            // Mettre à jour les données du graphique
+            myChart.data.labels = names;
+            myChart.data.datasets[0].data = scores;
+            myChart.data.datasets[0].backgroundColor = colors;
+            myChart.data.datasets[0].borderColor = borderColors;
+            myChart.update(); // Rafraîchir le graphique
+        }
     });
 </script>
+
+

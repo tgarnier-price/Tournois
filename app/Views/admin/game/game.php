@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">
-                <?= isset($game) ? "Editer " . $game['name'] : "Créer une école" ?>
+                <?= isset($game) ? "Editer " . $game['name'] : "Créer un jeux" ?>
             </h4>
         </div>
         <div class="card-body">
@@ -14,6 +14,18 @@
                         <label for="name" class="form-label">Nom du jeux</label>
                         <input type="text" class="form-control" id="name" placeholder="Nom de l'école"
                                value="<?= isset($game) ? $game['name'] : ""; ?>" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Catégorie du jeu</label>
+                        <select class="form-select" id="category" name="id_category" required>
+                            <option value="" disabled <?= !isset($categorygame) ? 'selected' : ''; ?>>Sélectionnez une catégorie</option>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?= $category['id']; ?>"
+                                    <?= isset($categorygame) && $categorygame['id'] == $category['id'] ? 'selected' : ''; ?>>
+                                    <?= $category['name']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
             </div>

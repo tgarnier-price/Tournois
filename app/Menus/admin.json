@@ -11,6 +11,11 @@
     "url": "/admin/userschool",
     "icon": "<i class=\"fa-solid fa-school nav-icon\"></i>"
   },
+  "categoryschool": {
+    "title": "Categories Ecole",
+    "url": "/admin/categoryschool",
+    "icon": "<i class=\"fa-solid fa-school nav-icon\"></i>"
+  },
   "categorygame": {
     "title": "categories / jeux",
     "url": "/user",

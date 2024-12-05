@@ -9,7 +9,7 @@ class UserSchoolModel extends Model
     protected $table = 'school';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['name', 'city', 'score', 'actif'];
+    protected $allowedFields = ['name', 'city', 'score', 'actif','id_category'];
 
     // Validation
     protected $validationRules = [

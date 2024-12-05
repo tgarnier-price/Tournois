@@ -4,62 +4,62 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 
-class CategoryGame extends BaseController
+class CategorySchool extends BaseController
 {
     protected $require_auth = true;
-    protected $requiredCategoryGames = ['administrateur'];
+    protected $requiredCategorySchool = ['administrateur'];
     public function getindex($id = null) {
         if ($id == null) {
-            return $this->view('/admin/game/index-category-game', [], true);
+            return $this->view('/admin/user/index-category-school', [], true);
         } else {
-            $cg = Model("CategoryGameModel");
+            $cs = Model("CategorySchoolModel");
             if ($id == "new") {
-                return $this->view('/admin/game/category-game', [], true);
+                return $this->view('/admin/user/category-school', [], true);
             }
-            $categorygame = $cg->getCategoryGameById($id);
-            return $this->view('/admin/game/category-game', ["categorygame" => $categorygame], true);
+            $categoryschool = $cs->getCategorySchoolById($id);
+            return $this->view('/admin/user/category-school', ["categoryschool" => $categoryschool], true);
         }
     }
 
     public function postupdate() {
         $data = $this->request->getPost();
-        $cg = Model("/CategoryGameModel");
-        if ($cg->updateCategoryGame($data['id'], $data)) {
+        $cs = Model("/CategorySchoolModel");
+        if ($cs->updateCategorySchool($data['id'], $data)) {
             $this->success("Categorie Jeux à bien été modifié");
         } else {
             $this->error("Une erreur est survenue");
         }
-        $this->redirect("/admin/game");
+        $this->redirect("/admin/school");
     }
 
     public function postcreate() {
         $data = $this->request->getPost();
-        $cg = Model("CategoryGameModel");
-        if ($cg->createCategoryGame($data)) {
+        $cs = Model("CategorySchoolModel");
+        if ($cs->createCategorySchool($data)) {
             $this->success("Le jeux à bien été ajouté.");
-            $this->redirect("/admin/game");
+            $this->redirect("/admin/school");
         } else {
-            $errors = $cg->errors();
+            $errors = $cs->errors();
             foreach ($errors as $error) {
                 $this->error($error);
             }
-            $this->redirect("/admin/game/new");
+            $this->redirect("/admin/school/new");
         }
     }
 
     public function getdelete($id){
-        $g = Model('CategoryGameModel');
-        if ($g->deleteCategoryGame($id)) {
+        $g = Model('CategorySchoolModel');
+        if ($g->deleteCategorySchool($id)) {
             $this->success("jeux supprimé");
         } else {
             $this->error("jeux non supprimé");
         }
-        $this->redirect('/admin/game');
+        $this->redirect('/admin/school');
     }
 
-    public function postSearchCategoryGame()
+    public function postSearchCategorySchool()
     {
-        $CategoryGameModel = model('CategoryGameModel');
+        $CategorySchoolModel = model('CategorySchoolModel');
 
         // Paramètres de pagination et de recherche envoyés par DataTables
         $draw        = $this->request->getPost('draw');
@@ -73,13 +73,13 @@ class CategoryGame extends BaseController
         $orderColumnName = $this->request->getPost('columns')[$orderColumnIndex]['data'];
 
         // Obtenez les données triées et filtrées
-        $data = $CategoryGameModel->getPaginatedCategoryGame($start, $length, $searchValue, $orderColumnName, $orderDirection);
+        $data = $CategorySchoolModel->getPaginatedCategorySchool($start, $length, $searchValue, $orderColumnName, $orderDirection);
 
         // Obtenez le nombre total de lignes sans filtre
-        $totalRecords = $CategoryGameModel->getTotalCategoryGame();
+        $totalRecords = $CategorySchoolModel->getTotalCategorySchool();
 
         // Obtenez le nombre total de lignes filtrées pour la recherche
-        $filteredRecords = $CategoryGameModel->getFilteredCategoryGame($searchValue);
+        $filteredRecords = $CategorySchoolModel->getFilteredCategorySchool($searchValue);
 
         $result = [
             'draw'            => $draw,
@@ -91,22 +91,22 @@ class CategoryGame extends BaseController
     }
 
     public function getdeactivate($id){
-        $g = Model('CategoryGameModel');
-        if ($g->deactivateCategoryGame($id)) {
+        $g = Model('CategorySchoolModel');
+        if ($g->deactivateCategorySchool($id)) {
             $this->success("Jeux désactivée");
         } else {
             $this->error("Jeux non désactivée");
         }
-        $this->redirect('/admin/game');
+        $this->redirect('/admin/school');
     }
 
     public function getactivate($id){
-        $g = Model('CategoryGameModel');
-        if ($g->activateCategoryGame($id)) {
+        $g = Model('CategorySchoolModel');
+        if ($g->activateCategorySchool($id)) {
             $this->success("Jeux activée");
         } else {
             $this->error("Jeux non activée");
         }
-        $this->redirect('/admin/game');
+        $this->redirect('/admin/school');
     }
 }

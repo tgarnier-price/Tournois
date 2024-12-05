@@ -14,7 +14,8 @@ class Game extends BaseController
         } else {
             $g = Model("GameModel");
             if ($id == "new") {
-                return $this->view('/admin/game/game', [], true);
+                $categories = model("CategoryGameModel")->getAllCategoryGame();
+                return $this->view('/admin/game/game', ["categories" => $categories], true);
             }
             $game = $g->getGameById($id);
             return $this->view('/admin/game/game', ["game" => $game], true);
