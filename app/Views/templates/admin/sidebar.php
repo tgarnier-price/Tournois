@@ -42,7 +42,7 @@
                         <?php } ?>
 
                         <li class="nav-item ps-2" id="menu_ecole">
-                            <a class="nav-link" href="<?= base_url('userschool'); ?>">
+                            <a class="nav-link" href="<?= base_url('admin/userschool'); ?>">
                                 <i class="fa-solid fa-school"></i>
 
                                 École
