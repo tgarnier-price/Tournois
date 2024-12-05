@@ -89,4 +89,26 @@ class Userschool extends BaseController
         ];
         return $this->response->setJSON($result);
     }
+
+    public function getdeactivate($id){
+        $us = Model('UserSchoolModel');
+        if ($us->deactivateSchool($id)) {
+            $this->success("École désactivée");
+        } else {
+            $this->error("École non désactivée");
+        }
+        $this->redirect('/admin/userschool');
+    }
+
+    public function getactivate($id){
+        $us = Model('UserSchoolModel');
+        if ($us->activateSchool($id)) {
+            $this->success("École activée");
+        } else {
+            $this->error("École non activée");
+        }
+        $this->redirect('/admin/userschool');
+    }
+
+
 }
