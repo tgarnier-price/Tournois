@@ -4,12 +4,12 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserSchoolModel extends Model
+class GameModel extends Model
 {
-    protected $table = 'school';
+    protected $table = 'game';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['name', 'city', 'score', 'actif','id_category'];
+    protected $allowedFields = ['name','id_category'];
 
     // Validation
     protected $validationRules = [
@@ -18,62 +18,55 @@ class UserSchoolModel extends Model
 
     protected $validationMessages = [
         'name' => [
-            'required'   => 'Le nom de l école est requis.',
-            'min_length' => 'Le nom de l école doit comporter au moins 3 caractères.',
-            'max_length' => 'Le nom de l école ne doit pas dépasser 100 caractères.',
+            'required'   => 'Le nom du jeux est requis.',
+            'min_length' => 'Le nom du jeux doit comporter au moins 3 caractères.',
+            'max_length' => 'Le nom du jeux ne doit pas dépasser 100 caractères.',
         ],
     ];
 
-    public function createSchool($data)
+    public function createGame($data)
     {
         // Pas de génération de slug ici
         return $this->insert($data);
     }
 
-    public function updateSchool($id, $data)
+    public function updateGame($id, $data)
     {
         return $this->update($id, $data);
     }
 
-    public function getUsersBySchool($schoolId)
-    {
-        return $this->join('TableUser', 'TableUserSchool.id = TableUser.id_school')
-            ->where('TableUserSchool.id', $schoolId)
-            ->select('TableUser.*, TableUserSchool.name as school_name')
-            ->findAll();
-    }
-
-    public function getAllSchool()
-    {
-        return $this->findAll();
-    }
-
-    public function getUserSchoolById($id)
+    public function getGameById($id)
     {
         return $this->find($id);
     }
 
-    public function deleteSchool($id)
+
+    public function getAllGame()
+    {
+        return $this->findAll();
+    }
+
+    public function deleteGame($id)
     {
         return $this->delete($id);
     }
 
-    public function deactivateSchool($id) {
+    public function deactivateGame($id) {
         $builder = $this->builder();
-        $builder->set('deleted_at', date('Y-m-d H:i:s'));  // Marquer comme inactif avec une date
+        $builder->set('deleted_at', date('Y-m-d H:i:s'));
         $builder->where('id', $id);
         return $builder->update();
     }
 
-    public function activateSchool($id) {
+    public function activateGame($id) {
         $builder = $this->builder();
-        $builder->set('deleted_at', NULL);  // Réactiver l'école en annulant la date
+        $builder->set('deleted_at', NULL);
         $builder->where('id', $id);
         return $builder->update();
     }
 
 
-    public function getPaginatedSchool($start, $length, $searchValue, $orderColumnName, $orderDirection)
+    public function getPaginatedGame($start, $length, $searchValue, $orderColumnName, $orderDirection)
     {
         $builder = $this->builder();
         // Recherche
@@ -91,13 +84,13 @@ class UserSchoolModel extends Model
         return $builder->get()->getResultArray();
     }
 
-    public function getTotalSchool()
+    public function getTotalGame()
     {
         $builder = $this->builder();
         return $builder->countAllResults();
     }
 
-    public function getFilteredSchool($searchValue)
+    public function getFilteredGame($searchValue)
     {
         $builder = $this->builder();
         if (!empty($searchValue)) {

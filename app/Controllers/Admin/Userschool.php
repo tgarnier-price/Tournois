@@ -14,7 +14,8 @@ class Userschool extends BaseController
         } else {
             $us = Model("UserSchoolModel");
             if ($id == "new") {
-                return $this->view('/admin/user/user-school', [], true);
+                $categories = model("CategorySchoolModel")->getAllCategorySchool();
+                return $this->view('/admin/user/user-school', ['categories' => $categories], true);
             }
             $school = $us->getUserSchoolById($id);
             return $this->view('/admin/user/user-school', ["school" => $school], true);
@@ -56,6 +57,7 @@ class Userschool extends BaseController
         }
         $this->redirect('/admin/userschool');
     }
+
 
     public function postSearchSchool()
     {

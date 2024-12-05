@@ -23,6 +23,19 @@
                                value="<?= isset($school) ? $school['city'] : ""; ?>" name="city" required>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Catégorie du jeu</label>
+                        <select class="form-select" id="category" name="id_category" required>
+                            <option value="" disabled <?= !isset($categoryschool) ? 'selected' : ''; ?>>Sélectionnez une catégorie</option>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?= $category['id']; ?>"
+                                    <?= isset($categoryschool) && $categoryschool['id'] == $category['id'] ? 'selected' : ''; ?>>
+                                    <?= $category['name']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
                     <!-- Score -->
                     <div class="mb-3">
                         <label for="score" class="form-label">Score</label>
