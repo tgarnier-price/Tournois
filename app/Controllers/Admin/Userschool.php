@@ -17,7 +17,7 @@ class Userschool extends BaseController
                 return $this->view('/admin/user/user-school', [], true);
             }
             $school = $us->getUserSchoolById($id);
-            return $this->view('/admin/user/index-school', ["school" => $school], true);
+            return $this->view('/admin/user/user-school', ["school" => $school], true);
         }
     }
 

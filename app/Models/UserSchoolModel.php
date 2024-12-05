@@ -32,7 +32,6 @@ class UserSchoolModel extends Model
 
     public function updateSchool($id, $data)
     {
-        // Pas de génération de slug ici
         return $this->update($id, $data);
     }
 
