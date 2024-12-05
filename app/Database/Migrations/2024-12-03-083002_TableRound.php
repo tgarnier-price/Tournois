@@ -15,33 +15,29 @@ class TableRound extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'id_user' => [
+            'tournament_id' => [ // Foreign key
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'   => true,
                 'null'       => false,
             ],
-            'id_gagnant' => [
-                'type'       => 'INT',
-                'constraint' => 11,
-                'unsigned'   => true,
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
                 'null'       => false,
-            ],
-            'id_tournament' => [
-                'type'       => 'INT',
-                'constraint' => 11,
-                'unsigned'   => true,
-                'null'       => true,
             ],
             'created_at' => [
-                'type'       => 'DATETIME',
-                'null'       => true,
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ],
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE'); // Exemple de clé étrangère vers `users`
-        $this->forge->addForeignKey('id_tournament', 'tournaments', 'id', 'CASCADE', 'CASCADE'); // Exemple de clé étrangère vers `tournaments`
+        $this->forge->addForeignKey('tournament_id', 'tournament', 'id', 'CASCADE', 'CASCADE'); // Vérifiez que `tournament` existe
         $this->forge->createTable('round');
 
     }

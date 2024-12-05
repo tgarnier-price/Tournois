@@ -45,8 +45,8 @@ class TableGame extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_category', 'categories', 'id', 'CASCADE', 'CASCADE'); // Clé étrangère vers `categories`
-        $this->forge->addForeignKey('type', 'types', 'id', 'CASCADE', 'CASCADE'); // Clé étrangère vers `types`
+        $this->forge->addForeignKey('id_category', 'categorygame', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('type', 'types', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('game');
 
     }
