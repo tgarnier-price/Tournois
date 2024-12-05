@@ -6,6 +6,11 @@
     "icon": "<i class=\"nav-icon fa-solid fa-house\"></i>",
     "class": "main-menu-accueil"
   },
+  "userschool": {
+    "title": "Ecole",
+    "url": "/admin/userschool",
+    "icon": "<i class=\"fa-solid fa-school nav-icon\"></i>"
+  },
   "produits": {
     "title": "Options",
     "url": "/user",
@@ -23,6 +28,7 @@
         "url": "/admin/userpermission",
         "icon": "<i class=\"nav-icon fa-solid fa-user-gear\"></i>"
       }
+
     }
   }
 }
