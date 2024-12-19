@@ -8,7 +8,7 @@ class Home extends BaseController
 {
     protected $title      = 'Tableau de Bord';
     protected $require_auth = true;
-    protected $requiredPermissions = ['administrateur'];
+    protected $requiredPermissions = ['administrateur','utilisateur'];
 
     public function getindex(): string
     {
