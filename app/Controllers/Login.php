@@ -18,16 +18,20 @@ class Login extends BaseController
         // Traitement de la connexion
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
-        // Logique de vérification des informations d'identification
         $um = Model('UserModel');
-        $user = $um->verifyLogin($email,$password);
+        $user = $um->verifyLogin($email, $password);
         if ($user) {
             $user = new User($user);
-            if (!$user->isActive()){
+            if (!$user->isActive()) {
                 return view('/login/login');
             }
             $this->session->set('user', $user);
-            return $this->redirect('/');
+            // Vérifier si l'utilisateur est admin ou non
+            if ($user->isAdmin()) {
+                return $this->redirect('/admin');
+            } else {
+                return $this->redirect('/admin');
+            }
         } else {
             // Gérer l'échec de l'authentification
             return view('/login/login');
