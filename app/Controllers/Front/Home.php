@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Controllers\Front;
 
 use App\Controllers\BaseController;
 
@@ -8,13 +8,14 @@ class Home extends BaseController
 {
     protected $title      = 'Tableau de Bord';
     protected $require_auth = true;
-    protected $requiredPermissions = ['administrateur'];
+    protected $requiredPermissions = ['administrateur','utilisateur'];
 
     public function getindex(): string
     {
         $um = Model("App\Models\UserModel");
         $infosUser = $um->countUserByPermission();
-        return $this->view('/admin/dashboard/index.php', ['infosUser' => $infosUser], true);
+        return $this->view('front/dashboard/index', ['infosUser' => $infosUser], true);
+
     }
 
     public function getforbidden() : string
