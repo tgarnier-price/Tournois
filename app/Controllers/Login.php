@@ -26,11 +26,10 @@ class Login extends BaseController
                 return view('/login/login');
             }
             $this->session->set('user', $user);
-            // Vérifier si l'utilisateur est admin ou non
             if ($user->isAdmin()) {
                 return $this->redirect('/admin');
             } else {
-                return $this->redirect('/admin');
+                return $this->redirect('/front');
             }
         } else {
             // Gérer l'échec de l'authentification

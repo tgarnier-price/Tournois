@@ -11,6 +11,11 @@
     "url": "/admin/userschool",
     "icon": "<i class=\"fa-solid fa-school nav-icon\"></i>"
   },
+  "tournament": {
+    "title": "Tournois",
+    "url": "/admin/tournament",
+    "icon": "<i class=\"fa-solid fa-chess nav-icon\"></i>"
+  },
   "categoryschool": {
     "title": "Categories Ecole",
     "url": "/admin/categoryschool",

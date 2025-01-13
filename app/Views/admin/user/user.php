@@ -49,17 +49,18 @@
                                 <label for="password" class="form-label">Mot de passe</label>
                                 <input type="password" class="form-control" id="password" placeholder="password" value="" name="password">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" <?= (isset($utilisateur) && $utilisateur['role'] !== 'admin') ? "style='display:none;'" : ""; ?>>
                                 <label for="id_permission" class="form-label">Rôle</label>
                                 <select class="form-select" id="id_permission" name="id_permission">
-                                    <option disabled <?= !isset($utilisateur) ? "selected":""; ?> >Selectionner un role</option>
-                                    <?php foreach($permissions as $p): ?>
-                                        <option value="<?= $p['id']; ?>" <?= ( isset($utilisateur) && $p['id'] == $utilisateur['id_permission']) ? "selected" : "" ?> >
+                                    <option disabled <?= !isset($utilisateur) ? "selected":""; ?>>Sélectionner un rôle</option>
+                                    <?php foreach ($permissions as $p): ?>
+                                        <option value="<?= $p['id']; ?>" <?= (isset($utilisateur) && $p['id'] == $utilisateur['id_permission']) ? "selected" : ""; ?>>
                                             <?= $p['name']; ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
+
                             <div class="mb-3 d-flex align-items-center">
                                 <label for="image" class="form-label me-2">Avatar</label>
                                 <div id="preview">
