@@ -16,7 +16,7 @@
     <div class="text-center">
         <h3 class="mb-4">Prêt à vous inscrire ?</h3>
         <p class="mb-4">Remplissez le formulaire pour confirmer votre participation.</p>
-        <a href="/admin/user/new/" class="btn btn-success btn-lg">Formulaire d'inscription</a>
+        <a href="/school/new" class="btn btn-success btn-lg">Formulaire d'inscription</a>
     </div>
 </section>
 

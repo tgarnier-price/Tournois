@@ -29,7 +29,7 @@ class Login extends BaseController
             if ($user->isAdmin()) {
                 return $this->redirect('/admin');
             } else {
-                return $this->redirect('/front');
+                return $this->redirect('/');
             }
         } else {
             // Gérer l'échec de l'authentification
