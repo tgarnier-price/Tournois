@@ -7,7 +7,15 @@ class Home extends BaseController
     protected $require_auth = false;
     public function index(): string
     {
-        return view('welcome_message');
+        return $this->view('front/dashboard/index');
+    }
+
+    public function getTournament()
+    {
+        $tournamentModel = model("TournamentModel") ;
+        $tournaments = $tournamentModel->findAll();
+
+        return view('tournament', ['tournaments' => $tournaments]);
     }
 
     public function getforbidden() : string
